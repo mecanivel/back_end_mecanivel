@@ -1,0 +1,222 @@
+{
+    "info": {
+      "_postman_id": "f8b83b02-46c3-4c1c-8d4d-99a92e5f96c3",
+      "name": "API Testing",
+      "description": "Collection to test the API for Company, MechanicB2B, Customer, and Orders.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"username\": \"user@example.com\", \"password\": \"yourpassword\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/auth",
+            "host": ["{{base_url}}"],
+            "path": ["auth"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Create Company",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"id\": \"company-1\", \"name\": \"My Company\", \"cnpj\": \"12345678000195\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/company/create",
+            "host": ["{{base_url}}"],
+            "path": ["company", "create"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Get All Companies",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/company/all",
+            "host": ["{{base_url}}"],
+            "path": ["company", "all"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Create Mechanic B2B",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"id\": \"mechanic-1\", \"name\": \"John Doe\", \"cpf\": \"12345678901\", \"phone\": \"1234567890\", \"company_id\": \"company-1\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/mechanic_b2b/create",
+            "host": ["{{base_url}}"],
+            "path": ["mechanic_b2b", "create"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Get All Mechanics B2B",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/mechanic_b2b/all",
+            "host": ["{{base_url}}"],
+            "path": ["mechanic_b2b", "all"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Create Customer",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"id\": \"customer-1\", \"name\": \"Jane Doe\", \"cpf\": \"10987654321\", \"phone\": \"0987654321\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/customer/create",
+            "host": ["{{base_url}}"],
+            "path": ["customer", "create"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Get All Customers",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/customer/all",
+            "host": ["{{base_url}}"],
+            "path": ["customer", "all"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Create Order",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"id\": \"order-1\", \"customer_id\": \"customer-1\", \"company_id\": \"company-1\", \"mechanic_b2b_id\": \"mechanic-1\", \"order_date\": \"2024-01-01\", \"status\": \"pending\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/orders/create",
+            "host": ["{{base_url}}"],
+            "path": ["orders", "create"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Get All Orders",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "url": {
+            "raw": "{{base_url}}/orders/all",
+            "host": ["{{base_url}}"],
+            "path": ["orders", "all"]
+          }
+        },
+        "response": []
+      }
+    ]
+  }
+  
