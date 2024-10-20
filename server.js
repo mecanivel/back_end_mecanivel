@@ -10,15 +10,15 @@ const auth = require('./routers/router_auth');
 const authenticateToken = require('./middleware_auth/middleware_auth');
 
 const server = express();
-const PORT = process.env.PORT || 3000; 
+const PORT = 3000; 
 
 
 server.use(cors());  
 server.use(bodyParser.json()); 
-server.use('/mecanivel/customers',authenticateToken,customersRoutes);
+server.use('/mecanivel/customers',customersRoutes);
 server.use('/mecanivel/mechanics_b2b',MechanicB2BRoutes);
 server.use('/mecanivel/company',CompanyRoutes);
-server.use('/mecanivel/orders',authenticateToken,OrdesRoutes);
+server.use('/mecanivel/orders',OrdesRoutes);
 server.use('/auth', auth);
 sequelize.authenticate()
   .then(() => {

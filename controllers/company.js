@@ -16,14 +16,16 @@ async function createCompany(req, res) {
 async function getAllCompanies(req, res) {
     try {
         const { id, name, cnpj } = req.query;
-        let filter = {};
-        if (id) filter.id = new RegExp(id, 'i');
-        if (name) filter.name = new RegExp(name, 'i');
-        if (cnpj) filter.cnpj = cnpj;
-        
-        const companies = await Company.find(filter).select('_id id name cnpj');
+
+        const whereClause = {};
+        if (id) whereClause.id = { [Op.iLike]: `%${id}%` }; // Usando Op.iLike para pesquisa case insensitive
+        if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
+        if (cnpj) whereClause.cnpj = cnpj;
+
+        const companies = await Company.findAll({ where: whereClause });
         res.status(200).send(companies);
     } catch (error) {
+        console.log(error);
         res.status(500).send(error);
     }
 }
