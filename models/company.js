@@ -15,6 +15,10 @@ const Company = sequelize.define('company', {
   cnpj: {
     type: DataTypes.CHAR(14),
     allowNull: false,
+  },
+  image: {
+    type: DataTypes.BLOB,  
+    allowNull: true,       
   }
 }, {
   timestamps: false,  

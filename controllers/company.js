@@ -18,11 +18,14 @@ async function getAllCompanies(req, res) {
         const { id, name, cnpj } = req.query;
 
         const whereClause = {};
-        if (id) whereClause.id = { [Op.iLike]: `%${id}%` }; // Usando Op.iLike para pesquisa case insensitive
+        if (id) whereClause.id = { [Op.iLike]: `%${id}%` }; 
         if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
         if (cnpj) whereClause.cnpj = cnpj;
-
-        const companies = await Company.findAll({ where: whereClause });
+        
+        const companies = await Company.findAll({
+            where: whereClause,
+            attributes: ['id', 'name', 'cnpj', 'image'], 
+        });
         res.status(200).send(companies);
     } catch (error) {
         console.log(error);
