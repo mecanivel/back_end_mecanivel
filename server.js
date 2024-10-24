@@ -7,6 +7,7 @@ const MechanicB2BRoutes = require('./routers/mechanic_b2b_router');
 const OrdesRoutes = require('./routers/orders_routers');
 const CompanyRoutes = require('./routers/company_router');
 const auth = require('./routers/router_auth');
+const ServicesRouter = require('./routers/service_router');
 const authenticateToken = require('./middleware_auth/middleware_auth');
 
 const server = express();
@@ -19,7 +20,9 @@ server.use('/mecanivel/customers',customersRoutes);
 server.use('/mecanivel/mechanics_b2b',MechanicB2BRoutes);
 server.use('/mecanivel/company',CompanyRoutes);
 server.use('/mecanivel/orders',OrdesRoutes);
+server.use('/mecanivel/services',ServicesRouter);
 server.use('/auth', auth);
+
 sequelize.authenticate()
   .then(() => {
     console.log('Conexão estabelecida com sucesso ao PostgreSQL.');

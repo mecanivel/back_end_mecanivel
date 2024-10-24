@@ -25,4 +25,13 @@ const Company = sequelize.define('company', {
   tableName: 'company',
 });
 
+Company.associate = (models) => {
+  Company.belongsToMany(models.Service, {
+    through: models.CompanyService,
+    as: 'services',
+    foreignKey: 'companyId',
+    otherKey: 'serviceId',
+  });
+};
+
 module.exports = Company;

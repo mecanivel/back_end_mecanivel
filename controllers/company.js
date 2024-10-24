@@ -1,5 +1,6 @@
 const Company = require('../models/company');
 const Messages = require('../errormessages/messages');
+const { Op } = require('sequelize');
 
 async function createCompany(req, res) {
     try {
@@ -16,9 +17,18 @@ async function createCompany(req, res) {
 async function getAllCompanies(req, res) {
     try {
         const { id, name, cnpj } = req.query;
-
+        console.log(req.query);
+        
         const whereClause = {};
-        if (id) whereClause.id = { [Op.iLike]: `%${id}%` }; 
+        if (id) {
+            const companiesIdArray = id.split(','); 
+            if (companiesIdArray.length > 1) {
+                whereClause.id = { [Op.in]: companiesIdArray }; 
+            } else {
+                whereClause.id = { [Op.iLike]: `%${id}%` }; 
+            }
+        }
+       
         if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
         if (cnpj) whereClause.cnpj = cnpj;
         
