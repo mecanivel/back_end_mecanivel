@@ -12,21 +12,21 @@ const Order = sequelize.define('order', {
     primaryKey: true
   },
   customer_id: {
-    type: DataTypes.CHAR(32),
+    type: DataTypes.UUID,
     references: {
       model: Customer,
       key: 'id',
     },
   },
   company_id: {
-    type: DataTypes.CHAR(32),
+    type: DataTypes.UUID,
     references: {
       model: Company,
       key: 'id',
     },
   },
   mechanic_b2b_id: {
-    type: DataTypes.CHAR(32),
+    type: DataTypes.UUID,
     references: {
       model: MechanicB2B,
       key: 'id',

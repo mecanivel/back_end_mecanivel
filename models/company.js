@@ -4,7 +4,7 @@ const {v4 : uuidv4 } = require('uuid');
 
 const Company = sequelize.define('company', {
   id: {
-    type: DataTypes.STRING(37),
+    type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },

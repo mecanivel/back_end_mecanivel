@@ -20,28 +20,33 @@ async function getAllCompanies(req, res) {
         console.log(req.query);
         
         const whereClause = {};
+
         if (id) {
-            const companiesIdArray = id.split(','); 
+            const companiesIdArray = id.split(',');
             if (companiesIdArray.length > 1) {
+                // Se for uma lista de ids, usamos Op.in
                 whereClause.id = { [Op.in]: companiesIdArray }; 
             } else {
-                whereClause.id = { [Op.iLike]: `%${id}%` }; 
+                // Se for um único id, buscamos pela igualdade exata
+                whereClause.id = { [Op.eq]: id };
             }
         }
-       
+
         if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
         if (cnpj) whereClause.cnpj = cnpj;
-        
+
         const companies = await Company.findAll({
             where: whereClause,
             attributes: ['id', 'name', 'cnpj', 'image'], 
         });
+
         res.status(200).send(companies);
     } catch (error) {
         console.log(error);
         res.status(500).send(error);
     }
 }
+
 
 async function getCompanyById(req, res) {
     try {

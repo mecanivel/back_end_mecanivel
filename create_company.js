@@ -16,7 +16,7 @@ async function createCompany() {
 
         // Dados da empresa que será criada
         const companyData = {
-            name: "Empresa Exemplo imagem",       // Nome da empresa
+            name: "mecanica fastcar",       // Nome da empresa
             cnpj: "12345678000190",        // CNPJ da empresa
             image: imageBuffer            // Passa a imagem como binário (buffer)
         };

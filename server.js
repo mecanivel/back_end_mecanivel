@@ -11,7 +11,7 @@ const ServicesRouter = require('./routers/service_router');
 const authenticateToken = require('./middleware_auth/middleware_auth');
 
 const server = express();
-const PORT = 8080; 
+const PORT = 3000; 
 
 
 server.use(cors());  

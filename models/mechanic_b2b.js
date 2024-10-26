@@ -21,7 +21,7 @@ const MechanicB2B = sequelize.define('mechanic_b2b', {
     type: DataTypes.STRING(15),
   },
   company_id: {
-    type: DataTypes.CHAR(32),
+    type: DataTypes.UUID,
     references: {
       model: Company,
       key: 'id'

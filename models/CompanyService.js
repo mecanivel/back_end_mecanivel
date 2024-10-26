@@ -4,12 +4,12 @@ const sequelize = require('../database');
 
 const CompanyService = sequelize.define('CompanyService', {
   id: {
-    type: DataTypes.STRING(37),
+    type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
   serviceId: {
-    type: DataTypes.STRING(37),
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: 'service',
@@ -17,7 +17,7 @@ const CompanyService = sequelize.define('CompanyService', {
     }
   },
   companyId: {
-    type: DataTypes.STRING(37),
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: 'company',
@@ -25,7 +25,7 @@ const CompanyService = sequelize.define('CompanyService', {
     }
   },
   description:{
-    type:DataTypes.STRING(50),
+    type:DataTypes.UUID,
     allowNull:false,
   },
   company_name:{
