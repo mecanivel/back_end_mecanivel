@@ -19,6 +19,10 @@ const Company = sequelize.define('company', {
   image: {
     type: DataTypes.BLOB,  
     allowNull: true,       
+  },
+  address:{
+    type:DataTypes.STRING(80),
+    allowNull:false
   }
 }, {
   timestamps: false,  

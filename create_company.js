@@ -18,7 +18,8 @@ async function createCompany() {
         const companyData = {
             name: "mecanica fastcar",       // Nome da empresa
             cnpj: "12345678000190",        // CNPJ da empresa
-            image: imageBuffer            // Passa a imagem como binário (buffer)
+            image: imageBuffer,
+            address:"Rua otelo celestino de castilhos 1123 parque verde cascavel pr"       // Passa a imagem como binário (buffer)
         };
 
         // Criação do registro no banco de dados

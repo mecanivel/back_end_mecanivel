@@ -24,10 +24,10 @@ async function getAllCompanies(req, res) {
         if (id) {
             const companiesIdArray = id.split(',');
             if (companiesIdArray.length > 1) {
-                // Se for uma lista de ids, usamos Op.in
+                
                 whereClause.id = { [Op.in]: companiesIdArray }; 
             } else {
-                // Se for um único id, buscamos pela igualdade exata
+                
                 whereClause.id = { [Op.eq]: id };
             }
         }
@@ -37,7 +37,7 @@ async function getAllCompanies(req, res) {
 
         const companies = await Company.findAll({
             where: whereClause,
-            attributes: ['id', 'name', 'cnpj', 'image'], 
+            attributes: ['id', 'name', 'cnpj', 'image','address'], 
         });
 
         res.status(200).send(companies);
