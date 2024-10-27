@@ -12,6 +12,10 @@ const Service = sequelize.define('service', {
     type: DataTypes.STRING(50),
     allowNull: false,
   },
+  image: {
+    type: DataTypes.BLOB,  
+    allowNull: true,       
+  },
 }, {
   timestamps: false,  
   tableName: 'service',

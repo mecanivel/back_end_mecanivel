@@ -25,7 +25,7 @@ const CompanyService = sequelize.define('CompanyService', {
     }
   },
   description:{
-    type:DataTypes.UUID,
+    type:DataTypes.STRING(100),
     allowNull:false,
   },
   company_name:{

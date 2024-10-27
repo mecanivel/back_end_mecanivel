@@ -4,6 +4,7 @@ const Company = require('../models/company');
 const CompanyService = require('../models/CompanyService');
 const Messages = require('../errormessages/messages');
 const { Op } = require('sequelize');
+const { v4: isUuid } = require('uuid'); 
 
 async function createService(req, res) {
     try {
@@ -17,52 +18,55 @@ async function createService(req, res) {
 }
 
 async function updateService(req, res) {
-    console.log(req.body);
-    
-    const { id } = req.params;
-    const { id_company, description, company_name, ...serviceData } = req.body;
-    console.log(id);
-    console.log("logando id company",id_company);
-    
+    const { id } = req.params; // ID do serviço
+    const { id_company, description, company_name } = req.body;
+
     try {
-        
+        // Verificar se o serviço existe
         const service = await Service.findByPk(id);
         if (!service) {
             return res.status(404).json({ error: Messages.NOT_FOUND_SERVICE });
         }
-        
-        await service.update(serviceData);
 
-        
+        // Atualizar o serviço com novos dados de descrição
+        await service.update({ description });
+
         if (id_company) {
+            // Verificar se a empresa existe
             const company = await Company.findByPk(id_company);
             if (!company) {
                 return res.status(404).json({ error: Messages.NOT_FOUND_COMPANY });
             }
 
-           
+            // Verificar se a relação já existe
             const existingRelation = await CompanyService.findOne({
                 where: { serviceId: id, companyId: id_company }
             });
 
             if (!existingRelation) {
+                // Criar a nova relação se não existir
                 await CompanyService.create({
                     serviceId: id,
                     companyId: id_company,
-                    description:description,
-                    company_name:company_name
+                    description: description,
+                    company_name: company_name
                 });
-            }else {
-                await existingRelation.update({description:description || existingRelation.description});
+            } else {
+                // Atualizar a descrição na relação existente
+                await existingRelation.update({
+                    description: description || existingRelation.description,
+                    company_name: company_name || existingRelation.company_name
+                });
             }
         }
 
         res.status(200).send({ message: Messages.UPDATED_SERVICE, service });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(400).send(error);
     }
 }
+
 
 async function getAllServices(req, res) {
     try {
@@ -75,45 +79,44 @@ async function getAllServices(req, res) {
 }
 
 async function getAllServicesandCompanies(req, res) {
-   
-        try {
-            const { serviceId, companyId, company_name } = req.query;
-    
-            const whereClause = {};
-            if (serviceId) {
-                const serviceIdsArray = serviceId.split(','); 
-                if (serviceIdsArray.length > 1) {
-                    whereClause.serviceId = { [Op.in]: serviceIdsArray }; 
-                } else {
-                    whereClause.serviceId = { [Op.iLike]: `%${serviceId}%` }; 
-                }
-            }
-           
-            if (companyId) {
-                if (Array.isArray(companyId)) {
-                    whereClause.companyId = { [Op.in]: companyId };  
-                } else {
-                    whereClause.companyId = { [Op.iLike]: `%${companyId}%` };  
-                }
-            }
-    
-            
-            if (company_name) {
-                whereClause.company_name = { [Op.iLike]: `%${company_name}%` };
-            }
-            const services = await CompanyService.findAll({
-                where: whereClause,
-                attributes: ['serviceId', 'companyId', 'company_name'], 
-            });
-            console.log(services);
-            
-            res.status(200).send(services);
-        } catch (error) {
-            console.log(error);
-            res.status(500).send(error);
+    try {
+        const { serviceId, companyId, company_name } = req.query;
+
+        const whereClause = {};
+        
+        // Condição para serviceId
+        if (serviceId) {
+            const serviceIdsArray = serviceId.split(','); 
+            whereClause.serviceId = serviceIdsArray.length > 1 
+                ? { [Op.in]: serviceIdsArray }
+                : { [Op.iLike]: `%${serviceId}%` }; 
         }
-    
+        
+        // Condição para companyId
+        if (companyId) {
+            whereClause.companyId = companyId.includes(',') 
+                ? { [Op.in]: companyId.split(',') }
+                : companyId;
+        }
+
+        // Condição para company_name
+        if (company_name) {
+            whereClause.company_name = { [Op.iLike]: `%${company_name}%` };
+        }
+
+        const services = await CompanyService.findAll({
+            where: whereClause,
+            attributes: ['serviceId', 'companyId', 'company_name'], 
+        });
+
+        console.log(services);
+        res.status(200).send(services);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
 }
+
 
 module.exports = {
     createService,
