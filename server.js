@@ -23,7 +23,7 @@ server.use('/mecanivel/company',CompanyRoutes);
 server.use('/mecanivel/orders',OrdesRoutes);
 server.use('/mecanivel/services',ServicesRouter);
 server.use('/mecanivel/reviews',ReviewRouter);
-server.use('/auth', auth);
+server.use('/mecanivel/auth', auth);
 
 sequelize.authenticate()
   .then(() => {

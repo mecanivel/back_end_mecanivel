@@ -12,9 +12,6 @@ async function findUserByUsername(username) {
     user = await Customer.findOne({ where: { username } });
     if (user) return { user, role: 'customer' };
 
-    user = await Company.findOne({ where: { username } });
-    if (user) return { user, role: 'company' };
-
     return null; 
 }
 
