@@ -8,6 +8,7 @@ const OrdesRoutes = require('./routers/orders_routers');
 const CompanyRoutes = require('./routers/company_router');
 const auth = require('./routers/router_auth');
 const ServicesRouter = require('./routers/service_router');
+const ReviewRouter = require('./routers/review_router');
 const authenticateToken = require('./middleware_auth/middleware_auth');
 
 const server = express();
@@ -21,6 +22,7 @@ server.use('/mecanivel/mechanics_b2b',MechanicB2BRoutes);
 server.use('/mecanivel/company',CompanyRoutes);
 server.use('/mecanivel/orders',OrdesRoutes);
 server.use('/mecanivel/services',ServicesRouter);
+server.use('/mecanivel/reviews',ReviewRouter);
 server.use('/auth', auth);
 
 sequelize.authenticate()

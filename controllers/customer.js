@@ -3,8 +3,7 @@ const Messages = require('../errormessages/messages');
 
 async function createCustomer(req, res) {
     try {
-        const customer = new Customer(req.body);
-        await customer.save();
+        const customer = await Customer.create(req.body);
         res.status(201).send({ message: Messages.CREATED_CUSTOMER, customer });
     } catch (error) {
         res.status(400).send(error);

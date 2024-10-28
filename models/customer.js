@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
-const {v4 : uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt'); // Importando bcrypt para encriptação
+const { v4: uuidv4 } = require('uuid');
 
 const Customer = sequelize.define('customer', {
   id: {
@@ -18,10 +19,27 @@ const Customer = sequelize.define('customer', {
   },
   phone: {
     type: DataTypes.STRING(15),
+  },
+  username: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
   }
 }, {
   timestamps: false,
   tableName: 'customer',
+});
+
+
+Customer.beforeCreate(async (customer) => {
+  if (customer.password) {
+    const salt = await bcrypt.genSalt(10);
+    customer.password = await bcrypt.hash(customer.password, salt);
+  }
 });
 
 module.exports = Customer;

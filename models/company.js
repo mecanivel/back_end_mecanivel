@@ -16,6 +16,10 @@ const Company = sequelize.define('company', {
     type: DataTypes.CHAR(14),
     allowNull: false,
   },
+  phone: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
   image: {
     type: DataTypes.BLOB,  
     allowNull: true,       

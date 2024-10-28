@@ -12,13 +12,14 @@ function loadImage(filePath) {
 async function createCompany() {
     try {
         // Carregar a imagem como um buffer binário
-        const imageBuffer = loadImage('./logo.png');  // Substitua pelo caminho correto da imagem
+        const imageBuffer = loadImage('./Screenshot 2024-10-22 113547.png');  // Substitua pelo caminho correto da imagem
 
         // Dados da empresa que será criada
         const companyData = {
             name: "mecanica fastcar",       // Nome da empresa
             cnpj: "12345678000190",        // CNPJ da empresa
             image: imageBuffer,
+            phone:"+5545999036871",
             address:"Rua otelo celestino de castilhos 1123 parque verde cascavel pr"       // Passa a imagem como binário (buffer)
         };
 
