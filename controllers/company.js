@@ -37,7 +37,7 @@ async function getAllCompanies(req, res) {
 
         const companies = await Company.findAll({
             where: whereClause,
-            attributes: ['id', 'name', 'cnpj', 'image','address','phone'], 
+            attributes: ['id', 'name', 'cnpj', 'image','address','phone','reviews_note'], 
         });
 
         res.status(200).send(companies);

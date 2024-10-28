@@ -27,6 +27,10 @@ const Company = sequelize.define('company', {
   address:{
     type:DataTypes.STRING(80),
     allowNull:false
+  },
+  reviews_note:{
+    type:DataTypes.FLOAT,
+    allowNull:true
   }
 }, {
   timestamps: false,  
