@@ -1,6 +1,7 @@
 const Customer = require('../models/customer');
 const Messages = require('../errormessages/messages');
 const Review = require('../models/reviews');
+const { Op } = require('sequelize');
 
 async function createCustomer(req, res) {
     try {
@@ -13,28 +14,28 @@ async function createCustomer(req, res) {
 
 async function getAllCustomers(req, res) {
     try {
-        const { id} = req.query;
+        const { id } = req.query;
         const whereClause = {};
 
       
     
         if (id) {
-            const reviewsIdArray = id.split(',');
-            if (reviewsArray.length > 1) {
+            const customerIdArray = id.split(',');
+            if (customerIdArray.length > 1) {
                 
                
-                whereClause.id = { [Op.in]: reviewsIdArray }; 
+                whereClause.id = { [Op.in]: customerIdArray }; 
             } else {
                 
                 whereClause.id = { [Op.eq]: id };
             }
         }
 
-        const reviews = await Customer.findAll({
+        const customers = await Customer.findAll({
             where: whereClause,
             attributes: ['id', 'name'], 
         });
-        res.status(200).send(reviews);
+        res.status(200).send(customers);
     } catch (error) {
 
         console.log(error);
