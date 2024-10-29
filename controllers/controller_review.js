@@ -1,6 +1,7 @@
 const Review = require('../models/reviews');
 const Messages = require('../errormessages/messages');
 const Company = require('../models/company');
+const { Op } = require('sequelize');
 
 async function createReview(req, res) {
     try {
@@ -34,7 +35,7 @@ async function createReview(req, res) {
 
 async function getAllReviews(req, res) {
     try {
-        const { id, company_id} = req.query;
+        const { id, companyId} = req.query;
         const whereClause = {};
 
       
@@ -48,6 +49,17 @@ async function getAllReviews(req, res) {
             } else {
                 
                 whereClause.id = { [Op.eq]: id };
+            }
+        }
+        if (companyId) {
+            const companiesIdArray = companyId.split(',');
+            if (companiesIdArray.length > 1) {
+                
+               
+                whereClause.companyId = { [Op.in]: companiesIdArray }; 
+            } else {
+                
+                whereClause.companyId = { [Op.eq]: companyId };
             }
         }
 

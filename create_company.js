@@ -16,7 +16,7 @@ async function createCompany() {
 
         // Dados da empresa que será criada
         const companyData = {
-            name: "mecanica fastcar",       // Nome da empresa
+            name: "mecanica auto repair",       // Nome da empresa
             cnpj: "12345678000190",        // CNPJ da empresa
             image: imageBuffer,
             phone:"+5545999036871",
