@@ -53,7 +53,7 @@ async function getAllReviews(req, res) {
 
         const reviews = await Review.findAll({
             where: whereClause,
-            attributes: ['id', 'description','grade'], 
+            attributes: ['id', 'description','grade','customerId','companyId'], 
         });
         res.status(200).send(reviews);
     } catch (error) {
