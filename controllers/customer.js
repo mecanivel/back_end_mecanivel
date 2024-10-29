@@ -1,5 +1,6 @@
 const Customer = require('../models/customer');
 const Messages = require('../errormessages/messages');
+const Review = require('../models/reviews');
 
 async function createCustomer(req, res) {
     try {
@@ -12,16 +13,32 @@ async function createCustomer(req, res) {
 
 async function getAllCustomers(req, res) {
     try {
-        const { id, name, cpf, phone } = req.query;
-        let filter = {};
-        if (id) filter.id = new RegExp(id, 'i');
-        if (name) filter.name = new RegExp(name, 'i');
-        if (cpf) filter.cpf = cpf;
-        if (phone) filter.phone = new RegExp(phone, 'i');
-        
-        const customers = await Customer.find(filter).select('_id id name cpf phone');
-        res.status(200).send(customers);
+        const { id} = req.query;
+        const whereClause = {};
+
+      
+    
+        if (id) {
+            const reviewsIdArray = id.split(',');
+            if (reviewsArray.length > 1) {
+                
+               
+                whereClause.id = { [Op.in]: reviewsIdArray }; 
+            } else {
+                
+                whereClause.id = { [Op.eq]: id };
+            }
+        }
+
+        const reviews = await Customer.findAll({
+            where: whereClause,
+            attributes: ['id', 'name'], 
+        });
+        res.status(200).send(reviews);
     } catch (error) {
+
+        console.log(error);
+        
         res.status(500).send(error);
     }
 }
