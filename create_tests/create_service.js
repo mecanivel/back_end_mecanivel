@@ -1,7 +1,7 @@
 // Importações necessárias
 const fs = require('fs');
 const { Sequelize } = require('sequelize');
-const Company = require('./models/company'); // Substitua pelo caminho correto do seu model
+const Service = require('../models/service'); // Substitua pelo caminho correto do seu model
 
 // Função para carregar a imagem do sistema de arquivos
 function loadImage(filePath) {
@@ -12,21 +12,19 @@ function loadImage(filePath) {
 async function createCompany() {
     try {
         // Carregar a imagem como um buffer binário
-        const imageBuffer = loadImage('./Screenshot 2024-10-22 113547.png');  // Substitua pelo caminho correto da imagem
-
+        const imageBuffer = loadImage('./alinhamento.png');  // Substitua pelo caminho correto da imagem
+        console.log(imageBuffer);
+        
         // Dados da empresa que será criada
-        const companyData = {
-            name: "mecanica auto repair",       // Nome da empresa
-            cnpj: "12345678000190",        // CNPJ da empresa
-            image: imageBuffer,
-            phone:"+5545999036871",
-            address:"Rua otelo celestino de castilhos 1123 parque verde cascavel pr"       // Passa a imagem como binário (buffer)
+        const serviceData = {
+          description:"Alinhamento e Balanceamento",
+          image:imageBuffer   // Passa a imagem como binário (buffer)
         };
 
         // Criação do registro no banco de dados
-        const company = await Company.create(companyData);
+        const service = await Service.create(serviceData);
 
-        console.log('Empresa criada com sucesso:', company);
+        console.log('Empresa criada com sucesso:', service);
     } catch (error) {
         console.error('Erro ao criar empresa:', error);
     } finally {
