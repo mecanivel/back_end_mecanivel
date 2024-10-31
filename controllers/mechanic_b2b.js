@@ -7,6 +7,8 @@ async function createMechanicB2B(req, res) {
         await mechanic_b2b.save();
         res.status(201).send({ message: Messages.CREATED_MECHANIC_B2B, mechanic_b2b });
     } catch (error) {
+        console.log(error);
+        
         res.status(400).send(error);
     }
 }

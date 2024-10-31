@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
 const Company = require('./company');
 const {v4 : uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
 
 const MechanicB2B = sequelize.define('mechanic_b2b', {
   id: {

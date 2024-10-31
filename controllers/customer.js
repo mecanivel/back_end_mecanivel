@@ -8,6 +8,8 @@ async function createCustomer(req, res) {
         const customer = await Customer.create(req.body);
         res.status(201).send({ message: Messages.CREATED_CUSTOMER, customer });
     } catch (error) {
+        console.log(error);
+        
         res.status(400).send(error);
     }
 }
