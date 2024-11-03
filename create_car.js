@@ -1,7 +1,7 @@
 // Importações necessárias
 const fs = require('fs');
 const { Sequelize } = require('sequelize');
-const Cars = require('../models/cars'); // Substitua pelo caminho correto do seu model
+const Cars = require('./models/cars'); // Substitua pelo caminho correto do seu model
 
 // Função para carregar a imagem do sistema de arquivos
 function loadImage(filePath) {
@@ -16,13 +16,13 @@ async function createCompany() {
 
         // Dados da empresa que será criada
         const carData = {
-            car_name: "volksvagen jetta",       // Nome da empresa
+            car_name: "carro 2 do cliente 2",       // Nome da empresa
             kms_driven:"40.000",        // CNPJ da empresa
             image: imageBuffer,
             pneu_status:"BOM",
             oil_status:"BOM",
             brake_pads_status:"BOM",
-            customer_id:"608a8634-9dbc-4579-8041-5d11e8132111"       
+            customer_id:"bdc9752d-596d-4df2-bc8f-5d2ca5559b89"       
         };
 
         // Criação do registro no banco de dados
