@@ -4,7 +4,9 @@ const router = express.Router();
 const { createCar, getAllCars } = require('../controllers/cars_controller');
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage,
+    limits:{fileSize:5 *1024 * 1024}
+});
 
 
 router.post('/create_car', upload.single('image'), createCar);
