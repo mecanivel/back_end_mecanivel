@@ -18,8 +18,8 @@ const PORT = 3000;
 
 server.use(cors());  
 server.use(bodyParser.json()); 
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
+server.use(express.json({ limit: '10mb' }));
+server.use(express.urlencoded({ limit: '10mb', extended: true }));
 server.use('/mecanivel/cars', CarsRouter);
 server.use('/mecanivel/customers',customersRoutes);
 server.use('/mecanivel/mechanics_b2b',MechanicB2BRoutes);
