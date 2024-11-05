@@ -16,13 +16,13 @@ async function createCompany() {
 
         // Dados da empresa que será criada
         const carData = {
-            car_name: "carro 2 do cliente 2",       // Nome da empresa
+            car_name: "carros para teste de multiplos",       // Nome da empresa
             kms_driven:"40.000",        // CNPJ da empresa
             image: imageBuffer,
             pneu_status:"BOM",
             oil_status:"BOM",
             brake_pads_status:"BOM",
-            customer_id:"bdc9752d-596d-4df2-bc8f-5d2ca5559b89"       
+            customer_id:"fa5a9d22-a8c8-4501-acbd-7d4ae22e5b53"       
         };
 
         // Criação do registro no banco de dados

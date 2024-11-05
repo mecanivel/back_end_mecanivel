@@ -1,7 +1,7 @@
 // Importações necessárias
 const fs = require('fs');
 const { Sequelize } = require('sequelize');
-const Company = require('../models/company'); // Substitua pelo caminho correto do seu model
+const Company = require('./models/company'); // Substitua pelo caminho correto do seu model
 
 // Função para carregar a imagem do sistema de arquivos
 function loadImage(filePath) {
@@ -12,11 +12,11 @@ function loadImage(filePath) {
 async function createCompany() {
     try {
         // Carregar a imagem como um buffer binário
-        const imageBuffer = loadImage('./Screenshot 2024-10-22 113547.png');  // Substitua pelo caminho correto da imagem
+        const imageBuffer = loadImage('./mecanica.png');  // Substitua pelo caminho correto da imagem
 
         // Dados da empresa que será criada
         const companyData = {
-            name: "mecanica auto repair",       // Nome da empresa
+            name: "mecanica do carlos",       // Nome da empresa
             cnpj: "12345678000190",        // CNPJ da empresa
             image: imageBuffer,
             phone:"+5545999036871",
