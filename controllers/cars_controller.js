@@ -5,20 +5,30 @@ const Cars = require('../models/cars');
 
 
 
-async function createCar(req,res) {
+async function createCar(req, res) {
     try {
-        const car = new Cars(req.body);
-        await Company.save();
-    
-        res.status(201).send({message:Messages.SUCCESSFULL_REGISTER});
+        const { car_name, kms_driven, pneu_status, oil_status, brake_pads_status, customer_id } = req.body;
 
+        const carData = {
+            car_name,
+            kms_driven,
+            pneu_status,
+            oil_status,
+            brake_pads_status,
+            customer_id,
+        };
+
+       
+        if (req.file) {
+            carData.image = req.file.buffer;  
+        }
+
+        const car = await Cars.create(carData);
+        res.status(201).send({ message: Messages.SUCCESSFULL_REGISTER });
     } catch (error) {
-        console.log(error);
-        
-        res.status(400).send(error);        
-
+        console.error(error);
+        res.status(400).send(error);
     }
-    
 }
 
 
