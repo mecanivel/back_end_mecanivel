@@ -1,14 +1,24 @@
 const MechanicB2B = require('../models/mechanic_b2b');
 const Messages = require('../errormessages/messages');
+const bcrypt = require('bcrypt');
+
 
 async function createMechanicB2B(req, res) {
     try {
-        const mechanic_b2b = new MechanicB2B(req.body);
+      
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        
+        const mechanic_b2b = new MechanicB2B({
+            ...req.body,
+            password: hashedPassword,
+        });
+
         await mechanic_b2b.save();
+
         res.status(201).send({ message: Messages.CREATED_MECHANIC_B2B, mechanic_b2b });
     } catch (error) {
         console.log(error);
-        
         res.status(400).send(error);
     }
 }
