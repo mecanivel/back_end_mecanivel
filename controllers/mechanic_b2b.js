@@ -1,6 +1,7 @@
 const MechanicB2B = require('../models/mechanic_b2b');
 const Messages = require('../errormessages/messages');
 const bcrypt = require('bcrypt');
+const { Op } = require('sequelize');
 
 
 async function createMechanicB2B(req, res) {
@@ -25,16 +26,18 @@ async function createMechanicB2B(req, res) {
 
 async function getAllMechanicsB2B(req, res) {
     try {
-        const { id, name, cpf, phone, company_id } = req.query;
-        let filter = {};
-        if (id) filter.id = new RegExp(id, 'i');
-        if (name) filter.name = new RegExp(name, 'i');
-        if (cpf) filter.cpf = cpf;
-        if (phone) filter.phone = new RegExp(phone, 'i');
-        if (company_id) filter.company_id = company_id;
-        
-        const mechanics_b2b = await MechanicB2B.find(filter).select('_id id name cpf phone company_id');
-        res.status(200).send(mechanics_b2b);
+        const { id } = req.query;
+        const whereClause = {};
+        if(id){
+            whereClause.id = {[Op.eq] : id };
+        } 
+
+        const mechanics = await MechanicB2B.findAll({
+            where: whereClause,
+            attributes:['id','name','company_id']
+        });
+
+        res.status(200).send(mechanics);
     } catch (error) {
         res.status(500).send(error);
     }
