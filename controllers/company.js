@@ -4,9 +4,19 @@ const { Op } = require('sequelize');
 
 async function createCompany(req, res) {
     try {
-        const company = new Company(req.body);
-        await company.save();
-        res.status(201).send({ message: Messages.CREATED_COMPANY, company });
+      const {name, cnpj, address, phone} = req.body;
+      const companyData ={
+        name, 
+        cnpj,
+        address,
+        phone
+      }
+      if(req.file) {
+        companyData.image = req.file.buffer;
+      }
+
+      const company = Company.create(companyData);
+      res.status(201).send(company);
     } catch (error) {
         console.log(error);
         
