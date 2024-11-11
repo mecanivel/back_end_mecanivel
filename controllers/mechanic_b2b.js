@@ -6,20 +6,11 @@ const { Op } = require('sequelize');
 
 async function createMechanicB2B(req, res) {
     try {
-      
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-        
-        const mechanic_b2b = new MechanicB2B({
-            ...req.body,
-            password: hashedPassword,
-        });
-
-        await mechanic_b2b.save();
-
-        res.status(201).send({ message: Messages.CREATED_MECHANIC_B2B, mechanic_b2b });
+        const mechanic_b2b = await MechanicB2B.create(req.body);
+        res.status(201).send({ message: Messages.CREATED_CUSTOMER, mechanic_b2b });
     } catch (error) {
         console.log(error);
+        
         res.status(400).send(error);
     }
 }

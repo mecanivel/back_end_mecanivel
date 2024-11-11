@@ -20,13 +20,20 @@ async function login(req, res) {
 
     try {
         const result = await findUserByUsername(username);
+        console.log("Resultado do usuário:", result);
+
         if (!result) {
             return res.status(404).send(Messages.NOT_FOUND_USER);
         }
 
         const { user, role } = result;
 
+        console.log("Senha digitada:", password);
+        console.log("Senha no banco:", user.password);
+
+    
         const isPasswordValid = await bcrypt.compare(password, user.password);
+        
         if (!isPasswordValid) {
             return res.status(401).send(Messages.INVALID_CREDENTIALS);
         }
@@ -35,7 +42,7 @@ async function login(req, res) {
             id: user.id,
             role: role,
         };
-
+ 
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '60m' });
 
         res.status(200).send({ message: Messages.SUCESSFUL_LOGIN, token });
@@ -45,5 +52,6 @@ async function login(req, res) {
         res.status(500).send(error);
     }
 }
+
 
 module.exports = { login };
