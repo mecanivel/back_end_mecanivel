@@ -1,7 +1,7 @@
 // Importações necessárias
 const fs = require('fs');
 const { Sequelize } = require('sequelize');
-const Service = require('../models/service'); // Substitua pelo caminho correto do seu model
+const Service = require('./models/service'); // Substitua pelo caminho correto do seu model
 
 // Função para carregar a imagem do sistema de arquivos
 function loadImage(filePath) {
@@ -12,12 +12,12 @@ function loadImage(filePath) {
 async function createCompany() {
     try {
         // Carregar a imagem como um buffer binário
-        const imageBuffer = loadImage('./alinhamento.png');  // Substitua pelo caminho correto da imagem
+        const imageBuffer = loadImage('./imagens/embreagem (2).png');  // Substitua pelo caminho correto da imagem
         console.log(imageBuffer);
         
         // Dados da empresa que será criada
         const serviceData = {
-          description:"Alinhamento e Balanceamento",
+          description:"Ajuste embreagem",
           image:imageBuffer   // Passa a imagem como binário (buffer)
         };
 

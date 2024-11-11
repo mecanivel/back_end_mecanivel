@@ -69,13 +69,27 @@ async function updateService(req, res) {
 
 
 async function getAllServices(req, res) {
-    try {
-        const services = await Service.findAll();
-        res.status(200).send(services);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
-    }
+  try {
+     const { id } = req.query;
+     const whereClause ={};
+
+     if(id){
+        const idArray = id.split(',');
+        whereClause.id = idArray.length > 1 
+        ? {[Op.in] : idArray}
+        : {[Op.like]: `${id}`};
+     }
+
+     const services = await Service.findAll({
+        where:whereClause,
+        attributes:['id', 'description', 'image']
+     })
+
+     res.status(200).send(services);
+  } catch (error) {
+    console.log(error);
+    
+  }
 }
 
 async function getAllServicesandCompanies(req, res) {
@@ -84,7 +98,7 @@ async function getAllServicesandCompanies(req, res) {
 
         const whereClause = {};
         
-        // Condição para serviceId
+       
         if (serviceId) {
             const serviceIdsArray = serviceId.split(','); 
             whereClause.serviceId = serviceIdsArray.length > 1 

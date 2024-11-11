@@ -48,13 +48,22 @@ async function getMechanicB2BById(req, res) {
 
 async function updateMechanicB2B(req, res) {
     try {
-        const mechanic_b2b = await MechanicB2B.findOneAndUpdate({ id: req.params.id }, req.body, { new: true }).select('-_id');
-        if (!mechanic_b2b) return res.status(404).send();
-        res.status(200).send(mechanic_b2b);
+        const { id } = req.params;
+        const [updatedRows, [updatedMechanic]] = await MechanicB2B.update(req.body, {
+            where: { id },
+            returning: true, 
+        });
+
+        if (updatedRows === 0) {
+            return res.status(404).send({ message: "Mecânico não encontrado." });
+        }
+        
+        res.status(200).send(updatedMechanic);
     } catch (error) {
         res.status(400).send(error);
     }
 }
+
 
 async function deleteMechanicB2B(req, res) {
     try {
