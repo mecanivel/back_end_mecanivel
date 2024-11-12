@@ -71,14 +71,41 @@ async function getCompanyById(req, res) {
 }
 
 async function updateCompany(req, res) {
+    const { id } = req.params;
+    const { name, cnpj, phone, address, reviews_note } = req.body;
+    const image = req.file ? req.file.buffer : undefined;
+
     try {
-        const company = await Company.findOneAndUpdate({ id: req.params.id }, req.body, { new: true }).select('-_id');
-        if (!company) return res.status(404).send();
-        res.status(200).send(company);
+        if (id) {
+            
+            const company = await Company.findByPk(id);
+            
+            if (!company) {
+                return res.status(404).json({ error: "Empresa não encontrada" });
+            }
+
+           
+            await Company.update({
+                name: name || company.name,
+                cnpj: cnpj || company.cnpj,
+                phone: phone || company.phone,
+                image: image || company.image,
+                address: address || company.address,
+                reviews_note: reviews_note || company.reviews_note
+            }, {
+                where: { id: id } 
+            });
+
+            res.status(200).send({ message: "Empresa atualizada" });
+        } else {
+            res.status(400).json({ error: "ID da empresa não fornecido" });
+        }
     } catch (error) {
-        res.status(400).send(error);
+        console.error("Erro ao atualizar a empresa:", error);
+        res.status(500).json({ error: "Erro ao atualizar a empresa" });
     }
 }
+
 
 async function deleteCompany(req, res) {
     try {

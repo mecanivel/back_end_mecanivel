@@ -17,7 +17,7 @@ const upload = multer({storage ,
 router.post('/create_company', upload.single('image') ,createCompany);
 router.get('/all_companies', getAllCompanies);
 router.get('/get_company/:id', getCompanyById);
-router.patch('/update_company/:id', updateCompany);
+router.patch('/update_company/:id', upload.single('image') , updateCompany);
 router.delete('/delete_company/:id', deleteCompany);
 
 module.exports = router;
