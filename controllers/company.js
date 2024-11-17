@@ -4,31 +4,39 @@ const { Op } = require('sequelize');
 
 async function createCompany(req, res) {
     try {
-      const {name, cnpj, address, phone} = req.body;
-      const companyData ={
-        name, 
-        cnpj,
-        address,
-        phone
-      }
-      if(req.file) {
-        companyData.image = req.file.buffer;
-      }
+        const { name, cnpj, address, phone } = req.body;
 
-      const company = Company.create(companyData);
-      res.status(201).send({
-        id: company._id,
-        name: company.name,
-        cnpj: company.cnpj,
-        address: company.address,
-        phone: company.phone,
-    });
-    } catch (error) {
-        console.log(error);
+        const companyData = {
+            name,
+            cnpj,
+            address,
+            phone,
+        };
+
+        if (req.file) {
+            companyData.image = req.file.buffer; 
+        }
+
         
-        res.status(400).send(error);
+        const company = await Company.create(companyData);
+
+       
+        console.log("Empresa criada:", company);
+
+       
+        res.status(201).send({
+            id: company.id,
+            name: company.name,
+            cnpj: company.cnpj,
+            address: company.address,
+            phone: company.phone,
+        });
+    } catch (error) {
+        console.error("Erro ao criar empresa:", error);
+        res.status(400).send({ message: "Erro ao criar empresa", error });
     }
 }
+
 
 async function getAllCompanies(req, res) {
     try {
