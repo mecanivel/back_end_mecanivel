@@ -12,12 +12,12 @@ function loadImage(filePath) {
 async function createCompany() {
     try {
         // Carregar a imagem como um buffer binário
-        const imageBuffer = loadImage('./imagens/embreagem (2).png');  // Substitua pelo caminho correto da imagem
+        const imageBuffer = loadImage('./imagens/alinhamento.png');  // Substitua pelo caminho correto da imagem
         console.log(imageBuffer);
         
         // Dados da empresa que será criada
         const serviceData = {
-          description:"Ajuste embreagem",
+          description:"Alinhamento e balanceamento",
           image:imageBuffer   // Passa a imagem como binário (buffer)
         };
 

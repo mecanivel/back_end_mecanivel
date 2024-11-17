@@ -16,7 +16,13 @@ async function createCompany(req, res) {
       }
 
       const company = Company.create(companyData);
-      res.status(201).send(company);
+      res.status(201).send({
+        id: company._id,
+        name: company.name,
+        cnpj: company.cnpj,
+        address: company.address,
+        phone: company.phone,
+    });
     } catch (error) {
         console.log(error);
         
