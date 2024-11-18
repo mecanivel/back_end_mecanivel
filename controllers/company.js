@@ -38,20 +38,18 @@ async function createCompany(req, res) {
 }
 
 
-async function getAllCompanies(req, res) {
+const getAllCompanies = async (req, res) => {
     try {
         const { id, name, cnpj } = req.query;
         console.log(req.query);
-        
+
         const whereClause = {};
 
         if (id) {
             const companiesIdArray = id.split(',');
             if (companiesIdArray.length > 1) {
-                
-                whereClause.id = { [Op.in]: companiesIdArray }; 
+                whereClause.id = { [Op.in]: companiesIdArray };
             } else {
-                
                 whereClause.id = { [Op.eq]: id };
             }
         }
@@ -61,15 +59,29 @@ async function getAllCompanies(req, res) {
 
         const companies = await Company.findAll({
             where: whereClause,
-            attributes: ['id', 'name', 'cnpj', 'image','address','phone','reviews_note'], 
+            attributes: ['id', 'name', 'cnpj', 'image', 'address', 'phone', 'reviews_note'],
         });
 
-        res.status(200).send(companies);
+        // Converter o campo de imagem para Base64
+        const companiesWithBase64Images = companies.map((company) => {
+            let base64Image = null;
+            if (company.image) {
+                base64Image = `data:image/jpeg;base64,${company.image.toString('base64')}`;
+            }
+
+            return {
+                ...company.toJSON(),
+                image: base64Image,
+            };
+        });
+
+        res.status(200).send(companiesWithBase64Images);
     } catch (error) {
-        console.log(error);
+        console.error('Erro ao buscar empresas:', error);
         res.status(500).send(error);
     }
-}
+};
+
 
 
 async function getCompanyById(req, res) {
